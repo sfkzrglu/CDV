@@ -1,0 +1,51 @@
+--1
+
+SELECT * from DEPARTMENTS d 
+--2
+
+SELECT * from EMPLOYEES e 
+--3
+
+SELECT e.SURNAME , e.JOB ,e.SALARY *12 from EMPLOYEES e 
+--4
+
+SELECT e.SURNAME , e.JOB ,e.SALARY *12 as yearly_income from EMPLOYEES e 
+--5
+
+SELECT e.SURNAME , e.JOB ,(e.SALARY +COALESCE(e.ADD_SALARY,0)) as monthly_income from EMPLOYEES e  ORDER BY monthly_income
+--6
+
+SELECT e.NAME || ' ' || e.SURNAME  from EMPLOYEES e where e.JOB =='ASSISTANT' ORDER BY e.NAME 
+--7
+
+SELECT (e.NAME || ' ' || e.SURNAME) as employee,e.JOB,e.SALARY,e.DEPT_ID  from EMPLOYEES e where e.DEPT_ID IN(30,40) ORDER BY SALARY DESC 
+--8
+
+SELECT (e.NAME || ' ' || e.SURNAME) as employee,e.JOB,e.SALARY from EMPLOYEES e
+where (e.SALARY >=1000 or e.SALARY <=2000) and e.JOB IN ('SECRETARY','ASSISTANT')
+ORDER BY e.SALARY
+--9
+
+select e.name,e.SURNAME  from EMPLOYEES e where e.SURNAME LIKE "%son"
+--10
+
+select e.name,e.SURNAME  from EMPLOYEES e where e.DEPT_ID is null
+--11
+
+select e.name,e.SURNAME,e.BOSS_ID  ,e.SALARY  from EMPLOYEES e
+where (e.BOSS_ID is not null) and e.SALARY >2000
+--12
+
+select e.name,e.SURNAME,e.DEPT_ID  from EMPLOYEES e
+where e.DEPT_ID=20 and (e.SURNAME LIKE 'W%' or e.SURNAME LIKE '%son')
+--13
+
+SELECT e.name , e.SURNAME  ,(e.SALARY +COALESCE(e.ADD_SALARY,0)) as monthly_income 
+from EMPLOYEES e WHERE monthly_income>4000
+--14
+
+SELECT 'Employee ' || e.NAME || ' ' || e.SURNAME || ' works as '  || e.JOB || ' and earns ' || (e.SALARY+COALESCE(ADD_SALARY,0)) as employees from EMPLOYEES e
+order by e.surname,e.name
+
+
+

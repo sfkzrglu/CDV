@@ -1,0 +1,59 @@
+--1
+with AvgSalaries as 
+(select job, avg(salary) as avg_sal_for_job
+from employees
+group by job)
+select e.surname, e.job, e.salary, avg_sal_for_job
+from employees e
+join AvgSalaries a on e.job = a.job
+where e.salary > avg_sal_for_job
+
+--2
+with SumSalaries as
+(select dept_id ,sum(salary) as sum_of_sal 
+from employees
+group by dept_id)
+select d.dept_name,sumsa.sum_of_sal
+from departments d
+join SumSalaries sumsa on d.dept_id=sumsa.dept_id
+where sumsa.sum_of_sal=(select max(sum_of_sal) from SumSalaries)
+
+--3
+with NewSalaries as
+(select e.boss_id ,e.surname ,e.salary
+from employees e
+where e.salary>(select e2.salary from employees e2 where e.boss_id=e2.emp_id)*0.6)
+select ns.surname,ns.salary,e.name as boss_name,e.salary as boss_salary
+from employees e
+join NewSalaries ns on e.emp_id =ns.boss_id
+
+--4
+select surname,min(hire_date) from employees
+group by hire_date,surname
+order by hire_date 
+fetch first 1 rows only
+
+--5
+with CTE as
+(select surname,min(hire_date) as hire_date from employees
+group by hire_date,surname
+order by hire_date) 
+select c.surname,c.hire_date-(select c.hire_date from CTE c
+fetch first 1 rows only) from CTE c
+
+--6
+with CTE as 
+(select surname,
+case when floor(salary / 1000) = 0 then 'one'
+     when floor(salary / 1000) = 1 then 'two'
+     when floor(salary / 1000) = 2 then 'three'
+     when floor(salary / 1000) = 3 then 'four'
+     when floor(salary / 1000) = 4 then 'five'
+end as words
+from employees
+where salary>999)
+select e.surname || ' earns '|| sm.words || ' grand' as Sentence
+from employees e
+join CTE sm on e.surname = sm.surname
+
+

@@ -1,0 +1,79 @@
+--1
+select e.name, e.surname, d.dept_name as department,d.address 
+from employees e inner join departments d
+on e.dept_id = d.dept_id 
+order by e.surname 
+
+--2
+select 'Employee ' || e.name || ' ' || e.surname || ' works in ' || d.dept_name || ' at ' || d.address 
+from employees e inner join departments d
+on e.dept_id = d.dept_id 
+order by e.surname 
+
+--3
+select e.surname ,e.salary 
+from employees e inner join departments d
+on e.dept_id =d.dept_id 
+where d.address ='47TH STR'
+
+--4
+select count(e),avg(e.salary) 
+from employees e inner join departments d
+on e.dept_id =d.dept_id 
+where d.address ='47TH STR'
+
+--5
+select e.surname, e.job,e.salary , j.min_salary as job_min_salary,j.max_salary as job_max_salary
+from employees e inner join jobs j 
+on e.job =j.name
+
+--6
+select e.surname, e.job,e.salary , j.min_salary as job_min_salary,j.max_salary as job_max_salary
+from employees e inner join jobs j 
+on e.job =j.name
+where e.salary<j.min_salary or e.salary>j.max_salary 
+
+--7
+select e.surname, e.job, e.salary , j.min_salary,
+inner join jobs j
+on e.salary
+between j.min_salary and j.max_salary
+where j.name='ASSISTANT'
+order by e. surname
+
+--8
+select d.dept_name ,count(e.surname) as employees_at_dept, sum(round(e.salary, 2)) as salaries_at_dept
+from employees e
+inner join departments d ON e.dept_id = d.dept_id
+group by d.dept_name
+order by d.dept_name
+
+--9
+select d.dept_name ,count(e.surname) as employees_at_dept, sum(round(e.salary, 2)) as salaries_at_dept
+from employees e
+inner join departments d ON e.dept_id = d.dept_id
+group by d.dept_name
+having count(e.surname) >= 2 
+order by d.dept_name
+
+--10
+select 
+    d.dept_name as department,
+    case
+        when COUNT(e.surname) <= 2 then 'small'
+        when COUNT(e.surname) between 3 and 6 then 'medium'
+        when COUNT(e.surname) >= 7 then 'big'
+    end as dept_size
+from employees e inner join departments d on e.dept_id = d.dept_id
+group by d.dept_name
+order by d.dept_name
+
+
+
+
+
+
+
+
+
+

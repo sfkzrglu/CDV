@@ -1,0 +1,77 @@
+create table Genres   
+(
+	genre_id int generated always as identity,
+	name varchar (100) not null,
+	primary key(genre_id)
+);
+
+create table Artists   
+(
+	artist_id int generated always as identity,
+	name varchar (100) not null,
+	primary key(artist_id)
+);
+
+create table Users   
+(
+	user_id int generated always as identity,
+	username varchar (50) not null,
+	email varchar(100) not null,
+	primary key(user_id)
+);
+
+create table Albums  
+(
+	album_id int generated always as identity,
+    title varchar (100) not null,
+	release_date date,
+	primary key(album_id)
+);
+
+create table Tracks  
+(
+	track_id int generated always as identity,
+    title varchar (100) not null,
+    album_id int,
+	duration_ms int,
+	popularity int,
+	unique (track_id),
+	primary key(track_id,album_id),
+	foreign key (album_id) references albums(album_id)
+);
+
+create table ArtistGenre   
+(
+	artist_id int,
+	genre_id int,
+	primary key (artist_id,genre_id),
+	foreign key (artist_id) references artists(artist_id),
+	foreign key (genre_id) references genres(genre_id)
+);
+
+create table ArtistUser
+(
+	artist_id int,
+	user_id int,
+	primary key (artist_id,user_id),
+	foreign key (artist_id) references artists(artist_id),
+	foreign key (user_id) references users(user_id)
+)
+
+create table ArtistTrack
+(
+	artist_id int,
+	track_id int,
+	primary key (artist_id,track_id),
+	foreign key (artist_id) references artists(artist_id),
+	foreign key (track_id) references tracks(track_id)
+);
+
+create table ArtistAlbum
+(
+	artist_id int,
+	album_id int,
+	primary key (artist_id,album_id),
+	foreign key (artist_id) references artists(artist_id),
+	foreign key (album_id) references albums(album_id)
+);

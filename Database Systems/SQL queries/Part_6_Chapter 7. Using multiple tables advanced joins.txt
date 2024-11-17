@@ -1,0 +1,121 @@
+--1
+select e.name, e.surname, 
+case	
+	when e.dept_id is null then ''
+	else d.dept_name
+end as department,
+case	
+	when e.dept_id is null then ''
+	else d.address 
+end as address
+from employees e left outer join departments d
+on e.dept_id = d.dept_id 
+order by e.surname 
+
+
+--2
+select e.name, e.surname, 
+case	
+	when e.dept_id is null then 'no department'
+	else d.dept_name
+end as dept_name,
+case	
+	when e.dept_id is null then 'no address'
+	else d.address 
+end as address
+from employees e left outer join departments d
+on e.dept_id = d.dept_id 
+order by e.surname 
+
+--3
+select 
+case	
+	when e.name is null then 'no employee'
+	else e.name 
+end as name,
+case	
+	when e.surname is null then 'no employee'
+	else e.surname 
+end as surname,
+case	
+	when d.dept_id is null then 'no department'
+	else d.dept_name
+end as dept_name,
+case	
+	when d.dept_id is null then 'no department'
+	else d.address 
+end as address
+from employees e full join departments d
+on e.dept_id = d.dept_id
+order by e.surname 
+
+--4
+select d.dept_name as department, COUNT(e.name) as employees_at_dept,
+COALESCE(SUM(e.salary), 0) as salaries_at_dept
+from departments d
+left join employees e on d.dept_id = e.dept_id
+group  by d.dept_name order by d.dept_name;
+
+--5
+select e.surname as employee, COALESCE(b.surname, 'no boss') as boss
+from employees e
+left join
+employees b on e.boss_id = b.emp_id  
+
+--6
+select e.surname as employee, COALESCE(b.surname, 'no boss') as boss
+from employees e
+left join
+employees b on e.boss_id = b.emp_id  
+where b.surname in('Wilson','Smith') or b.surname is null
+
+--7
+select
+e.surname as employee,
+(e.salary * 12 + COALESCE(e.add_salary, 0)) as emp_annual_salary,
+(b.salary * 12 + COALESCE(b.add_salary, 0))-(e.salary * 12 + COALESCE(e.add_salary, 0)) as less_than_boss
+from employees e
+left join
+employees b on e.boss_id = b.emp_id
+where e.boss_id is not null
+
+--8
+select e.surname as boss, COALESCE(count(s.emp_id),0) as subordinates
+from employees e
+left join
+employees s on e.emp_id = s.boss_id  
+group by e.surname
+
+--9
+select e.name || ' ' || e.surname as employee,
+d.dept_name as employee_department,
+b.name || ' ' || b.surname as boss,
+d.dept_name as boss_department
+from employees e 
+join departments d on e.dept_id =d.dept_id 
+join employees b on e.boss_id=b.emp_id
+join departments bd on e.dept_id =bd.dept_id 
+
+--10
+select e.name || ' ' || e.surname as employee,
+case
+	when d.dept_name is null then 'no department'
+	else d.dept_name
+end as employee_department,
+case
+	when b.name is null then 'no boss'
+	else b.name
+end as boss,
+case
+	when bd.dept_name is null then 'no department'
+	else bd.dept_name
+end as boss_department
+from employees e 
+left join departments d on e.dept_id =d.dept_id 
+left join employees b on e.boss_id=b.emp_id
+left join departments bd on b.dept_id =bd.dept_id 
+
+--11
+select count(*) as rows_of_cartesian_product from employees
+cross join departments
+cross join jobs

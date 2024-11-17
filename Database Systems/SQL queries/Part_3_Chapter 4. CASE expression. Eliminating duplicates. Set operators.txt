@@ -1,0 +1,33 @@
+--1
+SELECT surname, salary,
+	case
+		WHEN salary<1500 then 'low paid'
+		WHEN salary>1500 and salary<3000 then 'average paid'
+		WHEN salary>3000 then 'well paid'
+		ELSE CAST(salary AS text)
+	END AS label
+FROM employees
+order by surname 
+
+--2
+select distinct boss_id from employees where boss_id is not null
+
+--3
+select distinct dept_id,job  from employees where dept_id is not null
+
+--4
+select distinct to_char(hire_date ,'YYYY') as years from employees
+order by years
+
+--5
+select dept_id  from departments 
+except
+select dept_id from employees
+
+--6
+select surname,salary,'low paid' from employees where salary<1500
+union 
+select surname,salary,'average paid' from employees where salary>1500 and salary<3000
+union 
+select surname,salary,'well paid' from employees where salary>3000
+order by surname 

@@ -1,0 +1,48 @@
+--1
+select d.dept_id ,d.dept_name,d.address
+from departments d
+where d.dept_id not in(select dept_id from employees e where d.dept_id=e.dept_id)
+
+--2
+select e.surname, e.job, e.salary
+from employees e
+where e.salary>(select avg(e2.salary) from employees e2
+where e2.job=e.job 
+group by e2.job)
+
+--3
+select e.surname, e.job, e.salary,(select avg(salary) from employees
+where job=e.job 
+group by job) as avg_sal_for_job
+from employees e
+where e.salary>(select avg(e2.salary) from employees e2
+where e2.job=e.job 
+group by e2.job)
+
+--4
+select e.surname ,e.job ,e.salary
+from employees e
+where e.salary>(select e2.salary from employees e2 where e.boss_id=e2.emp_id)*0.6
+
+--5
+select max(dept_sum) as ma_sum 
+from (select dept_id, sum(salary) as dept_sum
+from employees group by dept_id) sum_dept_ds
+
+--6
+select d.dept_name, sum(e.salary) as sum_of_sal
+from employees e
+join departments d on e.dept_id = d.dept_id
+group by d.dept_name
+having sum(e.salary) = (select max(dept_sum)
+from (select sum(salary) as dept_sum from employees group by dept_id) 
+as sum_dept_ds)
+
+--7
+select surname, salary
+from employees e
+where 3 >= (select count(distinct e2.salary) from employees e2
+where e2.salary >= e.salary)
+
+
+

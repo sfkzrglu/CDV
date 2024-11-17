@@ -1,0 +1,21 @@
+--1
+alter table projects
+add column number_of_emp numeric(3),
+alter column description type varchar(1500)
+
+--2
+select project_id,max(project_name) from projects
+group by project_id 
+order by project_id
+
+alter table projects
+alter column project_name type varchar(20)
+
+-- ERROR: value too long for type character varying(20)
+
+--3
+alter table projects
+rename column budget to project_budget
+
+--4
+drop table projects_copy 

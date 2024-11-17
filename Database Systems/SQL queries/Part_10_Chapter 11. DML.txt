@@ -1,0 +1,102 @@
+--1
+insert into employees
+values
+(300,'Snow','Jack','PROFESSOR',100,'2013-05-01',4750,null,30),
+(310,'Cook','Robin','PROFESSOR',100,'2016-09-15',3500,1250,40),
+(320,'Dormand','Francis','ASSISTANT',110,'2018-01-01',3900,null,40)
+
+select * from employees
+order by emp_id desc
+fetch first 3 rows only
+
+--2
+insert into departments
+values (70,'DATABASE SYSTEMS','not set')
+
+select * from departments where dept_id=70
+
+--3
+update employees
+set dept_id=70
+where emp_id>=300
+
+select surname,name,salary,add_salary from employees
+order by emp_id desc
+fetch first 3 rows only
+
+--4
+update employees
+set salary=salary*1.1,
+add_salary=coalesce(add_salary*1.2,100)
+where emp_id>=300
+
+select surname,name,salary,add_salary from employees
+order by emp_id desc
+fetch first 3 rows only
+
+--5
+delete from departments
+where dept_id=70
+
+--update or delete on table "departments" violates foreign key constraint
+--"fk_department" on table "employees"
+
+--6
+delete from employees 
+where dept_id=70 and salary+add_salary<5000
+
+update employees 
+set dept_id=null 
+where dept_id=70
+
+select * from employees
+
+--7
+delete from departments
+where dept_id=70
+
+select * from departments
+
+--8
+with deptavgsalary as
+(select dept_id, avg(salary) as avg_salary
+from employees
+group by dept_id)
+select e.surname, e.salary, coalesce(da.avg_salary * 0.1, 0) as raise
+from employees e
+left join deptavgsalary da on e.dept_id = da.dept_id
+
+
+
+--9
+with deptavgsalary as
+(select dept_id,avg(salary) as avg_salary
+from employees
+group by dept_id)
+update employees
+set salary = salary + coalesce(da.avg_salary * 0.1, 0)
+from deptavgsalary da
+where employees.dept_id = da.dept_id
+
+select surname,salary from employees
+
+--10
+delete from employees
+where surname='Snow'
+
+select * from employees
+
+
+
+commit
+
+rollback
+
+
+
+
+
+
+
+
+

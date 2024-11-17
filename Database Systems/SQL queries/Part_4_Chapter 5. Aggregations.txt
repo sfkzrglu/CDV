@@ -1,0 +1,92 @@
+--1
+select min(salary) as minimum_salary,max(salary) as maximum_salary,(max(salary)-min(salary)) as difference from employees
+
+--2
+select count(*) from employees where dept_id is null 
+
+--3
+select count(job) from employees where job='PROFESSOR'
+
+--4
+select job,round(avg(salary)) as job_average_salary from employees
+group by job 
+order by job_average_salary desc
+
+--5
+select job,round(avg(salary+coalesce(add_salary,0))) as job_average_salary,
+count(job) as employees
+from employees
+group by job
+order by job_average_salary desc
+
+--6
+select job,round(avg(salary+coalesce(add_salary,0))) as job_average_salary,
+count(job) as employees
+from employees
+group by job
+having count(job)>1 
+order by job_average_salary desc
+
+--7
+select dept_id,count(add_salary) as employees_with_add_salary from employees
+where add_salary is not null and dept_id is not null
+group by dept_id 
+
+--8
+select dept_id,count(add_salary) as employees_with_add_salary,avg(add_salary) as avg_add_salary, sum(add_salary) as sum_of_add_salary
+from employees
+where add_salary is not null and dept_id is not null
+group by dept_id 
+
+--9
+select boss_id ,count(boss_id) as number_of_subordinates from employees
+where boss_id is not null
+group  by boss_id 
+
+--10
+select to_char(hire_date, 'YYYY') as year_of_employment, count(emp_id) as number_of_employees from employees 
+group by year_of_employment
+order by year_of_employment asc
+
+--11
+select LENGTH(surname) AS surname_length, count(*) as number_of_surnames from employees
+group by LENGTH(surname)
+order by LENGTH(surname)
+
+--12
+select count(*) as surnames_with_a from employees e where lower(surname) like '%a%'
+select count(*) as surnames_with_e from employees e where lower(surname) like '%e%'
+
+--13
+select sum(case when lower(surname) like '%a%' then 1 else 0 end) as surnames_with_a,
+       sum(case when lower(surname) like '%e%' then 1 else 0 end) as surnames_with_e
+from employees
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

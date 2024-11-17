@@ -1,0 +1,67 @@
+--1
+create table Projects(
+project_id int generated always as identity,
+project_name varchar(200),
+description varchar(1000),
+start_date date default current_Date,
+end_date date,
+budget numeric(10,2),
+primary key(project_id))
+
+--2
+insert into projects (project_name, description, start_date, end_date, budget)
+values('New Technologies Survey',
+'A project aimed at reviewing the area of advanced database technologies.',
+'2018-01-01',null,1500000),
+('Advanced Data Analysis',
+'Analyzing data obtained from various organizations.',
+'2017-09-20','2018-10-01',2750000)
+
+--3
+insert into projects (project_id,project_name, description, start_date, end_date, budget)
+values(55,'Creating backbone network',
+'Expanding the organizations network infrastructure.',
+'2019-06-01','2020-05-31',5000000)
+
+--no success because of Unterminated string literal and
+--cannot insert a non-DEFAULT value into column "project_id"
+
+--4
+insert into projects (project_name, description, start_date, end_date, budget)
+values('Creating backbone network',
+'Expanding the organizations network infrastructure.',
+'2019-06-01','2020-05-31',5000000)
+
+select project_id,project_name  from projects
+
+--5
+update projects
+set project_id=100
+where project_id=3
+
+--error. column "project_id" can only be updated to DEFAULT
+
+--6
+create table project_copy as
+select * from projects
+
+select * from projects_copy
+
+--7
+insert into projects (project_id,project_name, description, start_date, end_date, budget)
+values(100,'Creating mobile network',
+'Expanding the organizations network infrastructure – part 2.',
+'2020-06-01','2021-05-31',4000000)
+
+--cannot insert a non-DEFAULT value into column "project_id"
+--same error with point 3
+
+--8
+delete from projects_copy 
+where project_name='Creating backbone network'
+
+select * from projects
+
+--"Creating backbone network" still exists in projects table
+
+

@@ -1,0 +1,42 @@
+--1-get artists with his/her tracks duration as minute and order by desc
+select a.name as artist_name,sum(t.duration_ms)/60000 as total_duration
+from artists a
+join artisttrack at on a.artist_id = at.artist_id
+join tracks t on at.track_id = t.track_id
+group by a.artist_id, a.name
+order by total_duration desc
+
+
+--2-get artists with his/her albums
+SELECT a.name as artist_name, a2.title as album_name
+FROM artists a
+JOIN artistalbum aa ON a.artist_id = aa.artist_id
+JOIN albums a2 ON aa.album_id = a2.album_id
+
+--3-a sql query that shows users who are following albums from 1990
+select distinct u.username,a.release_date 
+from users u
+join artistuser ua on u.user_id = ua.user_id
+join artistalbum aa on ua.artist_id = aa.artist_id
+join albums a on aa.album_id = a.album_id
+where extract(year from a.release_date) > 1990
+
+--4-get tracks from electronic genre
+select distinct(t.title) as track_title
+from tracks t
+join artisttrack at on t.track_id = at.track_id
+join artistgenre ag on at.artist_id = ag.artist_id
+join genres g on ag.genre_id = g.genre_id
+where g.name = 'electronic'
+    
+    
+--5-most popular track and its genre
+select max(t.popularity) as max_popularity,t.title as title_track, g.name as genre_name
+from tracks t
+join artisttrack at on t.track_id = at.track_id
+join artistgenre ag on at.artist_id = ag.artist_id
+join  genres g on ag.genre_id = g.genre_id
+group by t.title, g.name
+order by max_popularity desc
+limit 1
+

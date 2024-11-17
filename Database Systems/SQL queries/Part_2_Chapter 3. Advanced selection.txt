@@ -1,0 +1,46 @@
+--1
+select surname, emp_id, substring(upper(surname),1,2) || emp_id  as login from employees
+order by(surname) ASC
+
+--2
+select surname from employees
+where (surname like '%l%') or (surname like 'L%')
+order by (surname) asc
+
+--3
+select surname  from employees
+where (substring(surname , 1 , length(surname) / 2) like '%l%') or (substring(surname , 1, length(surname) / 2) like '%L%') 
+order by (surname) ASC
+
+--4
+select surname, salary as original_salary, round( salary * 1.15) as increased_salary from employees
+order by(surname) asc
+
+--5
+select to_char(current_date, 'FMDay')  as "Today is"
+
+--6
+select to_char(DATE '1996-06-30', 'FMDay') as "I was born on" 
+
+--7
+select surname, to_char(hire_date, 'FMDD FMMonth, YYYY, FMDay') from employees
+order by (surname) asc 
+
+--8
+select surname, job, age(DATE '01-01-2000' ,hire_date) as experience_in_2000 from employees 
+where job in ('PROFESSOR', 'LECTURER', 'ASSISTANT')
+order by (experience_in_2000) desc, surname
+
+--9
+select surname, job, age(date '01-01-2000', hire_date) as experience_in_2000 from employees
+where job in ('PROFESSOR', 'LECTURER', 'ASSISTANT')
+and EXTRACT(YEAR FROM hire_date) < 1990
+order by (experience_in_2000) desc, surname
+
+--10
+select surname, job , to_char(age(DATE'01-01-2000', hire_date), 'FMYY') as experience_in_2000 from employees
+where job in ('PROFESSOR', 'LECTURER', 'ASSISTANT')
+and EXTRACT(YEAR FROM hire_date) < 1990
+order by (experience_in_2000) desc, surname 
+
+
