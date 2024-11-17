@@ -1,4 +1,4 @@
-# CDV-Tasks
+# CDV
 Projects and tasks which are given in the Collegium Da Vinci.
 
 #
