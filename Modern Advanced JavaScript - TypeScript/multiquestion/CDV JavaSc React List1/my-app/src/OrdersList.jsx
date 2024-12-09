@@ -19,26 +19,60 @@ export function OrdersList2({orders}) {
   )
 }
 
-export function OrdersList3({orders}) {
-  const [editable, setEditable] = useState(true);
-  const handleEdit = () => {
-    if (!editable) {
-      setEditable(true);
-    }
+export function OrdersList3({ orders }) {
+  const [inputValue, setInputValue] = useState('Eggs & Bacon');
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value); 
   };
-  console.log(editable)
+
   return (
     <>
       <form>
-        <label>New Order</label>
-        <input type="text" name="neworder" id="neworder" value='Eggs & Bacon' onChange={handleEdit} readOnly={!editable}/>
+        <label htmlFor="neworder">New Order</label>
+        <input type="text" name="neworder" id="neworder" value={inputValue} onChange={handleInputChange}  />
       </form>
-      <ul>{orders.map((order) => (
-        <OneOrder2 key={order.oid} oid={order.oid} text={order.text}/>
-       ))}
+      <ul>
+        {orders.map((order) => (
+          <OneOrder2 key={order.oid} oid={order.oid} text={order.text} />
+        ))}
       </ul>
-    </> 
-  )
+    </>
+  );
 }
 
-export default OrdersList
+export function OrdersList4({ orders }) {
+  const [inputValue, setInputValue] = useState('');
+  const [index, setIndex] = useState(0);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value); 
+  };
+
+  const handleAdd = (event) => {
+    if (inputValue.length>0) {
+      orders.push({oid:index,text:inputValue});
+      setInputValue('');
+      setIndex(++orders[orders.length-1].oid);
+    }else{
+      event.preventDefault();
+    }
+  };
+
+  return (
+    <>
+      <div>
+        <label htmlFor="neworder">New Order</label>
+        <input type="text" name="neworder" id="neworder" value={inputValue} onChange={handleInputChange}  />       
+        <button onClick={handleAdd}>Add</button>
+      </div>  
+      <ul>
+        {orders.map((order) => (
+          <OneOrder2 key={order.oid} oid={order.oid} text={order.text} />
+        ))}
+      </ul>
+    </>
+  );
+}
+
+export default OrdersList;
