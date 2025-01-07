@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="app.js"></script>
+    <style>
+        #dogImage{
+            width: 300px;
+            aspect-ratio: auto;
+        }
+        #flagImage{
+            width:20px;
+            aspect-ratio: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <h2 id="name"></h2>
+        <div style="white-space: nowrap;">
+            <h5 id="info" style="display: inline;"></h5>
+            <img id="flagImage" style="display: inline;" >
+        </div>
+        <div>
+            <img id="dogImage" >  
+            <h4 id="owner"></h4>
+            <h4 id="address"></h4>  
+            <h4 id="call"></h4>       
+        </div>  
+    </div>
+</body>
+</html>
