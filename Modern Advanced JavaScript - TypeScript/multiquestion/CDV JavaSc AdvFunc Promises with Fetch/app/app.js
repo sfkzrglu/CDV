@@ -1,5 +1,14 @@
 //TASK 1
 
+// - Create a new folder called 'app'.
+// - In 'app' create a package.json file using: npm init --y
+// - Install lite-server using: npm install lite-server --save-dev
+// - In package.json add a property: "type":"module" and a script "serve":"lite-server".
+// - Create a JavaScript file 'app.js' and add a simple script: console.log("It works!");
+// - Create a file 'index.html', add a <h1>My App</h1> in the body, and attach 'app.js' to this HTML file.
+// - Add a <div> element with an id of 'root' in the HTML file.
+// - Serve the html file using: npm run serve
+
 // 1. Use Fetch API to get a random dog picture from: https://dog.ceo/api/breeds/image/random
 // 2. Process/parse the received data and display the picture as shown in the screenshot below.
 // 3. Import faker.js to fake and display a name for the dog. >> import { faker } from "https://esm.sh/@faker-js/faker";

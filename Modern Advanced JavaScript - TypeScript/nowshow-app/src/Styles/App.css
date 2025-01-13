@@ -1,0 +1,25 @@
+.MiddleCenter {
+  margin: auto;
+  width: 40%;
+  padding: 10px;
+}
+
+.QAList {
+  max-height: '400px';
+  overflow-y: 'auto';
+  overflow-x: 'auto';
+  max-width: "600px";
+  margin: "auto";
+}
+
+.splash {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
+  padding: 20%;
+  z-index: -1;
+  background-color: papayawhip;
+}

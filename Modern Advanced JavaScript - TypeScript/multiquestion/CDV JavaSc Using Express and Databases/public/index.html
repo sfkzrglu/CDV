@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser List</title>
+    <script>
+        // Fetch the browser list from the backend and display it
+        async function loadBrowsers() {
+            //TASK 1
+            // const response = await fetch('/api/browsers');
+            // const browsers = await response.json();
+            // const list = document.getElementById('browser-list');
+            // browsers.forEach(browser => {
+            //     const listItem = document.createElement('li');
+            //     listItem.textContent = browser;
+            //     list.appendChild(listItem);
+            // });
+        }
+
+        window.onload = loadBrowsers;
+    </script>
+</head>
+<body>
+    <!-- TASK 1
+    <h1>Browser List</h1>
+    <ul id="browser-list"></ul> 
+    -->
+    <!-- TASK 2 -->
+    <form action="/translate" method="POST">
+        <label for="word">Enter a word:</label>
+        <input type="text" id="word" name="word" required>
+        <button type="submit">Translate</button>
+    </form>
+    <div id="result">
+     
+    </div>
+</body>
+</html>

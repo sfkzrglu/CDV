@@ -1,0 +1,4 @@
+-Question and answer inputboxes do not cleared after add question button is clicked
+
+-Number Of Questions may not working well. trying to match number of added questions and NoOfQu input box
+-number of question is not updated after questions are loaded from localstorage
