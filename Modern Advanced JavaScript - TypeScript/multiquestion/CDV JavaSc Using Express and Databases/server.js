@@ -46,18 +46,23 @@ connection.connect(err => {
     console.log('Connected to MySQL database');
   });
   
-  app.get('/api/browsers', (req, res) => {
+  app.get('/browsers', (req, res) => {
     connection.query('SELECT name FROM browsers', (err, results) => {
-      if (err) {
-        console.error('Query error:', err);
-        res.status(500).json({ error: 'Database query failed' });
-        return;
-      }
-  
-      res.json(results.map(row => row.name)); 
+        if (err) {
+            console.error('Query error:', err);
+            res.status(500).send('Database query failed');
+            return;
+        }
+
+        let html = '<h1>Browser List</h1><ul>';
+        results.forEach(row => {
+            html += `<li>${row.name}</li>`;
+        });
+        html += '</ul>';
+
+        res.send(html);
     });
-  });
-  
+});
   app.listen(3000, () => {
     console.log('Server running at http://localhost:3000/');
   });

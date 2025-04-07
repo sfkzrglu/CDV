@@ -1,0 +1,49 @@
+<!--
+1. Create a form like the one shown in the image below that allows calculating the factorial
+of a given number.
+Detailed requirements:
+a. Implement the factorial function in two ways: iteratively and recursively. Each
+button should trigger a different implementation of the factorial.
+b. The field displaying the result should be read-only (not editable).
+c. The input field for the number whose factorial is to be calculated must be
+required.
+d. The input field should only accept non-negative integers. Providing invalid input
+should result in an error message displayed in an alert box.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="number" class="fac"> != <input type="number" class="result" readonly>
+    <div>
+        <button onclick="factorialByloop()">Factorial (loop)</button>
+        <button onclick="getResultOfFbR()">Factorial (recursion)</button>
+    </div>
+
+</body>
+<script>
+    function factorialByloop() {
+        let factorial = 1;
+        for (let i = 1; i <= document.querySelector('.fac').value; i++) {
+            factorial *= i;
+        }
+        document.querySelector('.result').value = factorial;
+    }
+
+    function factorialByRecursion(n) {
+        if (n <= 1) return 1;
+        return n * factorialByRecursion(n - 1);
+    }
+
+    function getResultOfFbR(){
+        let factorial=factorialByRecursion(document.querySelector('.fac').value)
+        document.querySelector('.result').value = factorial;
+    }
+</script>
+</html>
