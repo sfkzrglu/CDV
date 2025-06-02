@@ -1,9 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react'
-import ProductList from './companents/ProductList';
-import ProductDetails from './companents/ProductDetails';
 import axios from 'axios';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
 function App() {
   const [products, setProducts] = useState([])
@@ -19,14 +17,8 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/"
-            element={<ProductList products={products} />} />
-          <Route path="details/:id"
-            element={<ProductDetails products={products} />} />
-        </Routes>
-      </BrowserRouter>
+      {/* Provide products to child routes via context */}
+      <Outlet context={{ products }} />
     </div>
   );
 }
